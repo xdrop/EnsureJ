@@ -1,4 +1,6 @@
-# EnsureJ
+
+<img src="http://i.imgur.com/LJIqQJe.png" width="172px"/>
+
 A validation framework for Java focused on a clear user friendly API with lots of pre-defined tests.
 
 ## Examples
