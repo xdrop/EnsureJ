@@ -4,12 +4,7 @@ public class IntegerHandler<T extends ParamCheckFailedException> extends Handler
 
     private int i;
 
-    public IntegerHandler(int i) {
-        this.i = i;
-    }
-
-    public IntegerHandler(ResultEval<T, IntegerHandler<T>> shortCircuit, int i) {
-        super(shortCircuit);
+    IntegerHandler(int i) {
         this.i = i;
     }
 
@@ -25,11 +20,23 @@ public class IntegerHandler<T extends ParamCheckFailedException> extends Handler
         return result(i >= lower && i < upper, String.format("Range check failed: %d <= %d <%d", lower, i, upper));
     }
 
+    /**
+     * Asserts that the number is positive
+     * @return
+     */
     public ResultEval<T, IntegerHandler<T>> isPositive(){
+        if(shortCircuit()) return getShortCircuit();
+
         return result(i >= 0, String.format("Positive check failed: %d was not positive",i));
     }
 
+    /**
+     * Asserts that the number is negative
+     * @return
+     */
     public ResultEval<T, IntegerHandler<T>> isNegative(){
+        if(shortCircuit()) return getShortCircuit();
+
         return result(i < 0, String.format("Negative check failed: %d was not negative", i));
     }
 
