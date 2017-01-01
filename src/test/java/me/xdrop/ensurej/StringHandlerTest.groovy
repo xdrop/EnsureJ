@@ -1,6 +1,6 @@
 package me.xdrop.ensurej
 
-import static me.xdrop.ensurej.Ensure.val;
+import static Ensure.val;
 
 class StringHandlerTest extends GroovyTestCase {
 

@@ -39,7 +39,7 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
         this.chain = chain;
     }
 
-    void eval(boolean rhs){
+    void bool_eval(boolean rhs){
         result = op.op(result, rhs);
         msg = "Aggregate condition " + op.toString() + " failed.";
     }
@@ -74,7 +74,7 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
         return result;
     }
 
-    public boolean get(){
+    public boolean eval(){
         return result;
     }
 
@@ -82,17 +82,37 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
         andThrow();
     }
 
+    public void t(String msg) throws T{
+        andThrow(msg);
+    }
+
+    public <E extends Exception> void t(Class<E> ex, String message) throws E{
+        andThrow(ex, message);
+    }
+
+    public <E extends Exception> void t(Class<E> ex) throws E{
+        andThrow(ex);
+    }
+
     public void andThrow() throws T {
         if(!result && msg!=null) throwGeneric(msg);
         if(!result && msg==null) throwGeneric();
     }
 
-    public <E extends Exception> void andThrow(Class<E> ex) throws E{
+    public void andThrow(String message) throws T {
+        if(!result && msg!=null) throwGeneric(msg);
+    }
+
+    public <F extends Exception> void andThrow(Class<F> ex) throws F {
         if(!result && msg!=null) throwCustom(ex, msg);
         if(!result && msg==null) throwCustom(ex);
     }
 
-    private <E extends Throwable> void throwCustom(Class<E> ex, String message) throws E{
+    public <F extends Exception> void andThrow(Class<F> ex, String message) throws F {
+        if(!result && msg!=null) throwCustom(ex, msg);
+    }
+
+    private <F extends Throwable> void throwCustom(Class<F> ex, String message) throws F {
         throwGeneric(ex, message);
     }
 
@@ -100,7 +120,7 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
         this.throwGeneric(exceptionClass, message);
     }
 
-    private <E extends Exception> void throwCustom(Class<E> ex) throws E{
+    private <F extends Exception> void throwCustom(Class<F> ex) throws F {
         try {
             throw ex.newInstance();
         } catch (InstantiationException e) {
@@ -111,7 +131,7 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
     }
 
 
-    private <E extends Throwable> void throwGeneric(Class<E> ex, String message) throws E {
+    private <F extends Throwable> void throwGeneric(Class<F> ex, String message) throws F {
         try {
             throw ex.getConstructor(String.class).newInstance(message);
         } catch (InstantiationException e) {

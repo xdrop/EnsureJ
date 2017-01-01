@@ -42,7 +42,7 @@ public abstract class Handler <T extends ParamCheckFailedException, E extends Ha
         }
 
         if(resultRoot != null){
-            resultRoot.eval(b);
+            resultRoot.bool_eval(b);
             return resultRoot;
         }
         return new ResultEval<T,E>(b, msg, exceptionClass, (E) self());
@@ -57,28 +57,28 @@ public abstract class Handler <T extends ParamCheckFailedException, E extends Ha
         }
 
         if(resultRoot != null){
-            resultRoot.eval(b);
+            resultRoot.bool_eval(b);
             return resultRoot;
         }
 
-        return new ResultEval<T,E>(b, exceptionClass, (E) self());
+        return new ResultEval<T,E>(b, exceptionClass, self());
     }
 
     public ResultEval<T, E> getResultRoot() {
         return resultRoot;
     }
 
-    public void setResultRoot(ResultEval<T, E> resultRoot) {
+    void setResultRoot(ResultEval<T, E> resultRoot) {
         this.resultRoot = resultRoot;
     }
 
-    public ResultEval<T, E> getShortCircuit() {
+    ResultEval<T, E> getShortCircuit() {
         return shortCircuit;
     }
 
-    public boolean shortCircuit(){ return state.equals(State.SHORTCIRCUIT); }
+    boolean shortCircuit(){ return state.equals(State.SHORTCIRCUIT); }
 
-    protected void setToShortCircuit(ResultEval<T,E> shortCircuit) {
+    void setToShortCircuit(ResultEval<T, E> shortCircuit) {
         state = State.SHORTCIRCUIT;
         this.shortCircuit = shortCircuit;
     }
