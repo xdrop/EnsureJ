@@ -37,6 +37,7 @@ Ensure.that(3).not().isPositive().andThrow(MyThrowable.class, "Number was not po
 
 ```java
 Ensure.that(3).inRange(0, 4).andEval(); // yields true
+Ensure.that(-10).isNegative.eval(); // yields true
 Ensure.that(-10).isNegative.e(); // yields true
 Ensure.that(3).isPositive().andEval(); // yields true
 Ensure.that(3).not().isPositive().andThrow(); // throws exception
@@ -46,33 +47,33 @@ Ensure.that(3).not().isPositive().andThrow(MyThrowable.class); // throws MyThrow
 ### Strings
 
 ```java
-Ensure.that("HELLO").isAllUppercase.e(); // yields true
-Ensure.that("hello").isAllLowercase.e(); // yields true
-Ensure.that("hello").isAllAlpha.e(); // yields true
-Ensure.that("hello1").isAllAlpha.e(); // yields false
-Ensure.that("1112").isAllNum.e(); // yields true
-Ensure.that("wasd").matches("\\w+").e() // yields true (matches regex)
+Ensure.that("HELLO").isAllUppercase.eval(); // yields true
+Ensure.that("hello").isAllLowercase.eval(); // yields true
+Ensure.that("hello").isAllAlpha.eval(); // yields true
+Ensure.that("hello1").isAllAlpha.eval(); // yields false
+Ensure.that("1112").isAllNum.eval(); // yields true
+Ensure.that("wasd").matches("\\w+").eval() // yields true (matches regex)
 ```
 
 ### Lists
 ```java
 List<Object> lst;
-Ensure.that(lst).isAll(obj).e(); // checks wether all list elements .equal(obj)
+Ensure.that(lst).isAll(obj).eval(); // checks wether all list elements .equal(obj)
 
 List<Number> lst;
-Ensure.that(lst).isAllPositive().e();
-Ensure.that(lst).isAllNegative().e();
-Ensure.that(lst).isAllInRange(0,100).e();
+Ensure.that(lst).isAllPositive().eval();
+Ensure.that(lst).isAllNegative().eval();
+Ensure.that(lst).isAllInRange(0,100).eval();
 
 // Java >= 8
-Ensure.that(lst).any(x -> x > 3).e();
+Ensure.that(lst).any(x -> x > 3).eval();
 
 // Java <= 8
 Ensure.that(lst).all(new Predicate<Integer>() {
     public boolean pass(Integer in) {
         return in > 3;
     }
-}).e();
+}).eval();
 ```
 
 ## Shorthand notation
