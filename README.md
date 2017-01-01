@@ -66,7 +66,7 @@ Ensure.that(lst).any(x -> x > 3).e();
 // Java <= 8
 Ensure.that(lst).all(new Predicate<Integer>() {
     public boolean pass(Integer in) {
-        return in > 1;
+        return in > 3;
     }
-});
+}).e();
 ```
