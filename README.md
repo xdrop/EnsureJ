@@ -1,5 +1,5 @@
 
-<img src="http://i.imgur.com/LJIqQJe.png" width="172px"/>
+<img src="http://i.imgur.com/cYFDzZO.png" width="172px"/>
 
 A validation framework for Java focused on a clear user friendly API with lots of pre-defined tests.
 
