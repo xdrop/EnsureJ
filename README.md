@@ -60,7 +60,13 @@ Ensure.that(lst).isAllPositive().e();
 Ensure.that(lst).isAllNegative().e();
 Ensure.that(lst).isAllInRange(0,100).e();
 
-// Java-8
-Ensure.that(lst).<Number> satisfies(Number x -> x > 3).e();
+// Java >= 8
+Ensure.that(lst).any(x -> x > 3).e();
 
+// Java <= 8
+Ensure.that(lst).all(new Predicate<Integer>() {
+    public boolean pass(Integer in) {
+        return in > 1;
+    }
+});
 ```
