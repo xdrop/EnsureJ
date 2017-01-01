@@ -143,4 +143,74 @@ public class StringHandler<T extends ParamCheckFailedException> extends Handler<
         return result(true);
 
     }
-}
+
+    /**
+     * Checks whether the String is not null and contains at least one
+     * non-space character.
+     *
+     * @return
+     */
+    public ResultEval<T, StringHandler<T>> isNotEmpty() {
+        if (shortCircuit()) return getShortCircuit();
+
+        return result(s != null && s.matches("[^\\s+]"), "String was empty");
+    }
+
+    /**
+     * Checks whether the String is null or contains at least one
+     * non-space character.
+     *
+     * @return
+     */
+    public ResultEval<T, StringHandler<T>> isEmpty() {
+        if (shortCircuit()) return getShortCircuit();
+
+        return result(s == null || s.matches("[^\\s+]"), "String was not empty");
+    }
+
+    /**
+     * Checks whether the String is not null
+     *
+     * @return
+     */
+    public ResultEval<T, StringHandler<T>> isNotNull() {
+        if (shortCircuit()) return getShortCircuit();
+
+        return result(s != null, "String was null");
+    }
+
+    /**
+     * Checks whether the String does not start with whitespace
+     * @return
+     */
+    public ResultEval<T, StringHandler<T>> noWhitespaceStart() {
+        if (shortCircuit()) return getShortCircuit();
+
+        return result(s.matches("\\s+.*"), "String starts with space");
+    }
+
+    /**
+     * Checks whether the String does not end with whitespace
+     * @return
+     */
+    public ResultEval<T, StringHandler<T>> noWhitespaceEnd() {
+        if (shortCircuit()) return getShortCircuit();
+
+        return result(s.matches(".*\\s"), "String ends with space");
+    }
+
+    /**
+     * Checks whether the String does not contain extra whitespace at start or end.
+     * This is effectively {@code noWhitespaceStart()} and {@code noWhitespaceEnd()}
+     * combined together.
+     *
+     * @return
+     */
+    public ResultEval<T, StringHandler<T>> isTrimmed() {
+        if (shortCircuit()) return getShortCircuit();
+
+        return result(noWhitespaceEnd().e() || noWhitespaceStart().e(), "String is not trimmed");
+    }
+
+
+    }
