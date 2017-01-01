@@ -81,6 +81,18 @@ public class Ensure {
         return self;
     }
 
+    public static ObjectHandler<ParamCheckFailedException> that(Object a){
+        ObjectHandler<ParamCheckFailedException> self = new ObjectHandler<ParamCheckFailedException>(a);
+        self.setExceptionClass(ParamCheckFailedException.class);
+        return self;
+    }
+
+    public static ObjectHandler<ParamCheckFailedException> val(Object a){
+        ObjectHandler<ParamCheckFailedException> self = new ObjectHandler<ParamCheckFailedException>(a);
+        self.setExceptionClass(ParamCheckFailedException.class);
+        return self;
+    }
+
 
     public static <E> ListHandler<E, ParamCheckFailedException> that(List<E> a){
         ListHandler<E, ParamCheckFailedException> self = new ListHandler<E, ParamCheckFailedException>(a);

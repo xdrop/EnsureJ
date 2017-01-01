@@ -25,4 +25,18 @@ class StringHandlerTest extends GroovyTestCase {
         assertFalse val("AAAA1").isAllUppercase(false).e()
     }
 
+    void testHasOnlyLetters() {
+        assertTrue val("aaa").hasOnlyLetters(false).e()
+        assertTrue val("aaa").hasOnlyLetters(true).e()
+        assertTrue val("aaaα").hasOnlyLetters(true).e()
+        assertFalse val("aaaα").hasOnlyLetters(false).e()
+        assertFalse val("aaa1").hasOnlyLetters(true).e()
+        assertFalse val("aaa1").hasOnlyLetters(false).e()
+
+    }
+
+    void testHasOnlyDigits() {
+        assertTrue val("111").hasOnlyDigits().e()
+        assertFalse val("111a").hasOnlyDigits().e()
+    }
 }

@@ -120,7 +120,7 @@ public class StringHandler<T extends ParamCheckFailedException> extends Handler<
             }
             return result(true);
         } else {
-            return matches("\\w+");
+            return matches("^[a-zA-Z]+$");
         }
     }
 
