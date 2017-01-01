@@ -1,6 +1,8 @@
 
 <img src="http://i.imgur.com/cYFDzZO.png" width="129px"/>
 
+[![Build Status](https://travis-ci.org/xdrop/PassLock.svg?branch=master)](https://travis-ci.org/xdrop/passlock)
+
 A validation framework for Java focused on a clear user friendly API with lots of pre-defined tests.
 
 ## Examples
