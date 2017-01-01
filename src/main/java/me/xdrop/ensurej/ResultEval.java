@@ -82,9 +82,47 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
         andThrow();
     }
 
-    void andThrow() throws T {
+    public void andThrow() throws T {
         if(!result && msg!=null) throwGeneric(msg);
         if(!result && msg==null) throwGeneric();
+    }
+
+    public <E extends Exception> void andThrow(Class<E> ex) throws E{
+        if(!result && msg!=null) throwCustom(ex, msg);
+        if(!result && msg==null) throwCustom(ex);
+    }
+
+    private <E extends Throwable> void throwCustom(Class<E> ex, String message) throws E{
+        throwGeneric(ex, message);
+    }
+
+    private void throwGeneric(String message) throws T {
+        this.throwGeneric(exceptionClass, message);
+    }
+
+    private <E extends Exception> void throwCustom(Class<E> ex) throws E{
+        try {
+            throw ex.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private <E extends Throwable> void throwGeneric(Class<E> ex, String message) throws E {
+        try {
+            throw ex.getConstructor(String.class).newInstance(message);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     private void throwGeneric() throws T {
@@ -93,20 +131,6 @@ public class ResultEval<T extends ParamCheckFailedException, E extends Handler<T
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void throwGeneric(String message) throws T {
-        try {
-            throw exceptionClass.getConstructor(String.class).newInstance(message);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }
