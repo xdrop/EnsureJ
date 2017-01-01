@@ -74,3 +74,13 @@ Ensure.that(lst).all(new Predicate<Integer>() {
     }
 }).e();
 ```
+
+## Shorthand notation
+
+`EnsureJ` can also be imported statically and used using the short `val()` notation.
+
+```java
+import static me.xdrop.ensurej.Ensure.*;
+
+val("aaaa").isAllUppercase().e();
+```
