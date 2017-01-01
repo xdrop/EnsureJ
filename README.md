@@ -48,9 +48,16 @@ Ensure.that(3).not().isPositive().andThrow(MyThrowable.class); // throws MyThrow
 ```java
 Ensure.that("HELLO").isAllUppercase.e(); // yields true
 Ensure.that("hello").isAllLowercase.e(); // yields true
-Ensure.that("hello").isAllAlpha.e(); // yields true
-Ensure.that("hello1").isAllAlpha.e(); // yields false
-Ensure.that("1112").isAllNum.e(); // yields true
+Ensure.that("hello").hasOnlyLetters.e(); // yields true
+Ensure.that("hello1").hasOnlyDigits.e(); // yields false
+Ensure.that("1112").hasOnlyDigits.e(); // yields true
+Ensure.that("    ").isNotEmpty.e(); // yields false
+Ensure.that(null).isNotEmpty.e(); // yields false
+Ensure.that("    ").isNotNull.e(); // yields true
+Ensure.that("  aaa").noWhitespaceStart.e(); // yields false
+Ensure.that("aaa   ").noWhitespaceEnd.e(); // yields false
+Ensure.that("   aaa   ").isTrimmed.e(); // yields false
+Ensure.that("aaa").isTrimmed.e(); // yields true
 Ensure.that("wasd").matches("\\w+").e() // yields true (matches regex)
 ```
 
