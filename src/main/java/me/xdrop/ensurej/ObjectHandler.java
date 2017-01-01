@@ -8,6 +8,11 @@ public class ObjectHandler<T extends ParamCheckFailedException> extends Handler<
         this.obj = obj;
     }
 
+    /**
+     * Checks whether the object is not null
+     *
+     * @return
+     */
     public ResultEval<T, ObjectHandler<T>> isNotNull(){
         if (shortCircuit()) return getShortCircuit();
 
@@ -15,6 +20,10 @@ public class ObjectHandler<T extends ParamCheckFailedException> extends Handler<
 
     }
 
+    /**
+     * Checks whether the object is null
+     * @return
+     */
     public ResultEval<T, ObjectHandler<T>> isNull(){
         if (shortCircuit()) return getShortCircuit();
 
@@ -22,6 +31,12 @@ public class ObjectHandler<T extends ParamCheckFailedException> extends Handler<
 
     }
 
+    /**
+     * Checks whether the source object equals() the other object
+     *
+     * @param other Tested for equality using {@code obj.equals(other)}
+     * @return
+     */
     public ResultEval<T, ObjectHandler<T>> equalsTo(Object other){
         if (shortCircuit()) return getShortCircuit();
 
@@ -29,6 +44,13 @@ public class ObjectHandler<T extends ParamCheckFailedException> extends Handler<
 
     }
 
+    /**
+     * Checks whether the source object is an instance of the class,
+     * described by the received class argument.
+     *
+     * @param clazz The class argument to check against
+     * @return
+     */
     public ResultEval<T, ObjectHandler<T>> instanceOf(Class<?> clazz){
         if (shortCircuit()) return getShortCircuit();
 
