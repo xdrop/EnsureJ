@@ -24,7 +24,7 @@ Ensure.that(3).inRange(0, 4).e(); // identical to above
 Ensure.that(3).inRange(0, 4).eval(); // identical to above
 
 Ensure.that(3).not().isPositive().andThrow(); // throws exception
-Ensure.that(3).not().isPositive().andThrow("Number was not positive); // throws default exception with custom message
+Ensure.that(3).not().isPositive().andThrow("Number was not positive"); // throws default exception with custom message
 Ensure.that(3).not().isPositive().andThrow(MyThrowable.class); // throws MyThrowable exception
 Ensure.that(3).not().isPositive().andThrow(MyThrowable.class, "Number was not positive"); // throws MyThrowable exception with custom message
 ```
@@ -48,4 +48,19 @@ Ensure.that("hello").isAllAlpha.e(); // yields true
 Ensure.that("hello1").isAllAlpha.e(); // yields false
 Ensure.that("1112").isAllNum.e(); // yields true
 Ensure.that("wasd").matches("\\w+").e() // yields true (matches regex)
+```
+
+### Lists
+```java
+List<Object> lst;
+Ensure.that(lst).isAll(obj).e(); // checks wether all list elements .equal(obj)
+
+List<Number> lst;
+Ensure.that(lst).isAllPositive().e();
+Ensure.that(lst).isAllNegative().e();
+Ensure.that(lst).isAllInRange(0,100).e();
+
+// Java-8
+Ensure.that(lst).<Number> satisfies(Number x -> x > 3).e();
+
 ```
