@@ -9,7 +9,7 @@ A validation framework for Java focused on a clear user friendly API with lots o
 
 ### General
 
-Requests start with `Ensure.that(T)` where `T` is the variable being validated. Depending on the variable type several condition checks are available and can be chained using `and()` and `or()` (Note: this boolean operators are left associative). For example:
+Requests start with `Ensure.that(T)` where `T` is the variable being validated. Depending on the variable type several condition checks are available and can be chained using `and()` and `or()` (Note: these boolean operators are left associative). For example:
 
 ```java
 Ensure.that(T).conditionCheck().and().otherConditionCheck().or().otherConditionCheck().(...)
@@ -49,9 +49,9 @@ Ensure.that(3).not().isPositive().andThrow(MyThrowable.class); // throws MyThrow
 ```java
 Ensure.that("HELLO").isAllUppercase.eval(); // yields true
 Ensure.that("hello").isAllLowercase.eval(); // yields true
-Ensure.that("hello").isAllAlpha.eval(); // yields true
-Ensure.that("hello1").isAllAlpha.eval(); // yields false
-Ensure.that("1112").isAllNum.eval(); // yields true
+Ensure.that("hello").hasOnlyLetters.eval(); // yields true
+Ensure.that("hello1").hasOnlyLetters.eval(); // yields false
+Ensure.that("1112").hasOnlyDigits.eval(); // yields true
 Ensure.that("wasd").matches("\\w+").eval() // yields true (matches regex)
 ```
 
