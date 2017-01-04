@@ -1,35 +1,49 @@
 package me.xdrop.ensurej;
 
-import me.xdrop.ensurej.Handler;
-import me.xdrop.ensurej.ParamCheckFailedException;
-
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListHandler<E, T extends ParamCheckFailedException> extends Handler<T, ListHandler<E, T>> {
+public class ListHandler<T> extends Handler<ListHandler<T>>{
 
-    private List<E> lst;
+    private List<T> arg;
+    private List<Predicate<T>> checks = new ArrayList<>(2);
 
-    ListHandler(List<E> lst) {
-        this.lst = lst;
+    public ListHandler(List<T> arg) {
+        this.arg = arg;
     }
 
-    public ResultEval<T, ListHandler<E, T>> all(Predicate<E> p){
-        for(E e : lst){
-            if(!p.pass(e)){
-                return result(false, "all() check failed");
-            }
+    public boolean all(Predicate<T> pred){
+
+        for(T t: arg){
+            if(!pred.eval(t))
+                return false;
         }
 
-        return result(true);
+        return true;
+
+
     }
 
-    public ResultEval<T, ListHandler<E, T>> any(Predicate<E> p){
-        for(E e : lst){
-            if(p.pass(e)){
-                return result(true);
-            }
-        }
+    public ListHandler<T> add(Predicate<T> pred){
+        checks.add(pred);
+        return this;
+    }
 
-        return result(false, "any() check failed");
+    public Chain<Object, ListHandler<T>> all() {
+
+        return new Chain<>(new Predicate<Object>() {
+            @Override
+            public boolean eval(Object in) {
+                for(T t: arg){
+                    for(Predicate<T> pred: checks){
+                        if(!pred.eval(t))
+                            return false;
+                    }
+                }
+
+                return true;
+            }
+        },null, self());
+
     }
 }

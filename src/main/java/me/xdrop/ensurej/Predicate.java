@@ -1,7 +1,5 @@
 package me.xdrop.ensurej;
 
-public interface Predicate<F> {
-
-    boolean pass(F in);
-
+public interface Predicate<E> {
+    boolean eval(E in);
 }
