@@ -1,4 +1,6 @@
-package me.xdrop.ensurej;
+package me.xdrop.ensurej.checks;
+
+import me.xdrop.ensurej.Predicate;
 
 public class CheckInt {
 

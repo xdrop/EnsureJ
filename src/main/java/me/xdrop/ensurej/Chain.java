@@ -42,7 +42,17 @@ public class Chain<E, F extends Handler> {
     }
 
     public F and(){
+        this.ops.add(Operation.AND);
         return chain;
+    }
+
+    public F or(){
+        this.ops.add(Operation.OR);
+        return chain;
+    }
+
+    public void visit(Predicate<E> p, E arg){
+        chainedConditions.add(new Tuple(p, arg));
     }
 
     private boolean _eval(){

@@ -1,4 +1,6 @@
-package me.xdrop.ensurej;
+package me.xdrop.ensurej.checks;
+
+import me.xdrop.ensurej.Predicate;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
