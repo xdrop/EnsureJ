@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class Chain<E, F extends Handler> {
 
     enum Operation {
@@ -24,12 +25,22 @@ public class Chain<E, F extends Handler> {
     class Tuple{
         Predicate<E> p;
         E arg;
+        boolean invert;
 
-        public Tuple(Predicate<E> p, E arg) {
+        Tuple(Predicate<E> p, E arg) {
             this.p = p;
             this.arg = arg;
         }
+
+        Tuple(Predicate<E> p, E arg, boolean invert) {
+            this.p = p;
+            this.arg = arg;
+            this.invert = invert;
+        }
+
     }
+
+
 
     private List<Tuple> chainedConditions;
     private List<Operation> ops;
@@ -44,6 +55,21 @@ public class Chain<E, F extends Handler> {
         chainedConditions.add(new Tuple(p, arg));
     }
 
+    Chain(Predicate<E> p, E arg, F chain, String msg, boolean invert) {
+        this.chainedConditions = new ArrayList<>(4);
+        this.ops = new ArrayList<>();
+        this.chain = chain;
+        this.msg = msg;
+        chainedConditions.add(new Tuple(p, arg, invert));
+    }
+
+    private static boolean eval(Chain.Tuple t){
+        if(t.invert)
+            return !t.p.eval(t.arg);
+        else
+            return t.p.eval(t.arg);
+    }
+
     public F and(){
         this.ops.add(Operation.AND);
         chain.visit(this);
@@ -56,39 +82,34 @@ public class Chain<E, F extends Handler> {
         return chain;
     }
 
-    public void visit(Predicate<E> p, E arg){
+    void visit(Predicate<E> p, E arg){
         chainedConditions.add(new Tuple(p, arg));
     }
+    void visit(Predicate<E> p, E arg, boolean invert){
+        chainedConditions.add(new Tuple(p, arg, invert));
+    }
+
 
     private boolean _eval(){
         if (ops.size() < 1){
-            Predicate<E> p = chainedConditions.get(0).p;
-            E arg = chainedConditions.get(0).arg;
-            return p.eval(arg);
+            return eval(chainedConditions.get(0));
         } else{
             int i = 1;
             boolean lhs;
 
-            Tuple t1 = chainedConditions.get(0);
-            Predicate<E> p1 = t1.p;
-            E arg1 = t1.arg;
+            boolean r1 = eval(chainedConditions.get(0));
+            boolean r2 = eval(chainedConditions.get(1));
 
-            Tuple t2 = chainedConditions.get(1);
-            Predicate<E> p2 = t2.p;
-            E arg2 = t2.arg;
 
-            lhs = ops.get(0).apply(p1.eval(arg1), p2.eval(arg2));
+            lhs = ops.get(0).apply(r1, r2);
 
             // Pop operations and evaluate predicates until something evaluates to true
             // or all to false
             while(i < ops.size()){
-                t1 = chainedConditions.get(i+1);
-                p1 = t1.p;
-                arg1 = t1.arg;
-
+                boolean r = eval(chainedConditions.get(i+1));
                 Operation op = ops.get(i);
 
-                lhs = op.apply(lhs, p1.eval(arg1));
+                lhs = op.apply(lhs, r);
 
 //                if (op == Operation.AND && !lhs){
 //                    return false;

@@ -1,12 +1,13 @@
 package me.xdrop.ensurej;
 
-public abstract class Handler<E extends Handler<E>> {
+@SuppressWarnings("unchecked")
+abstract class Handler<E extends Handler<E>> {
 
     private boolean not;
     private Chain<Object, E> toReturn;
 
 
-    E self(){
+    private E self(){
         return (E) this;
     }
 
@@ -15,12 +16,17 @@ public abstract class Handler<E extends Handler<E>> {
         return self();
     }
 
-    public <T> Chain<T, E> create(Predicate<T> p, T arg, String msg){
+    <T> Chain<T, E> create(Predicate<T> p, T arg, String msg){
+
+        boolean _not = not;
+        not = false;
+
         if(toReturn != null){
-            toReturn.visit((Predicate<Object>) p, arg);
+            toReturn.visit((Predicate<Object>) p, arg, _not);
             return (Chain<T, E>) toReturn;
         }
-        return new Chain<>(p, arg, self(), msg);
+        return new Chain<>(p, arg, self(), msg, _not);
+
     }
 
     void visit(Chain<Object,E> toReturn){
