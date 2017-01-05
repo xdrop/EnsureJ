@@ -115,7 +115,7 @@ public class CheckString {
         };
     }
 
-    public static Predicate<String> noWhitespaceStart(){
+    public static Predicate<String> hasWhitespaceStart(){
         return new Predicate<String>() {
             @Override
             public boolean eval(String s) {
@@ -124,7 +124,7 @@ public class CheckString {
         };
     }
 
-    public static Predicate<String> noWhitespaceEnd(){
+    public static Predicate<String> hasWhitespaceEnd(){
         return new Predicate<String>() {
             @Override
             public boolean eval(String s) {
@@ -137,7 +137,7 @@ public class CheckString {
         return new Predicate<String>() {
             @Override
             public boolean eval(String s) {
-                return noWhitespaceStart().eval(s) && noWhitespaceEnd().eval(s);
+                return !hasWhitespaceStart().eval(s) && !hasWhitespaceEnd().eval(s);
             }
         };
     }

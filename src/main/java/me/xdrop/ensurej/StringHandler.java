@@ -113,7 +113,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasStartWhitespace(){
-        return create(CheckString.noWhitespaceStart(), s, "");
+        return create(CheckString.hasWhitespaceStart(), s, "");
     }
 
 
@@ -122,7 +122,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasEndWhitespace(){
-        return create(CheckString.noWhitespaceEnd(), s, "");
+        return create(CheckString.hasWhitespaceEnd(), s, "");
     }
 
     /**
