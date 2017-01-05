@@ -18,7 +18,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllLowercase(){
-        return new Chain<>(CheckString.isAllLowercase(true), s, self());
+        return create(CheckString.isAllLowercase(true), s, "");
     }
 
     /**
@@ -30,7 +30,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllLowercase(boolean allowNonChar){
-        return new Chain<>(CheckString.isAllLowercase(allowNonChar), s, self());
+        return create(CheckString.isAllLowercase(allowNonChar), s, "");
     }
 
     /**
@@ -40,7 +40,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllUppercase(){
-        return new Chain<>(CheckString.isAllUppercase(true), s, self());
+        return create(CheckString.isAllUppercase(true), s, "");
     }
 
     /**
@@ -52,18 +52,18 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllUppercase(boolean allowNonChar){
-        return new Chain<>(CheckString.isAllUppercase(allowNonChar), s, self());
+        return create(CheckString.isAllUppercase(allowNonChar), s, "");
     }
 
 
     /**
      * Checks whether the String matches the given pattern.
      *
-     * @param pattern Regex pattern
+     * @param regex Regex pattern
      * @return
      */
     public Chain<String, StringHandler> matches(String regex){
-        return new Chain<>(CheckString.matches(regex), s, self());
+        return create(CheckString.matches(regex), s, "");
     }
 
 
@@ -76,7 +76,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasOnlyLetters(boolean unicode){
-        return new Chain<>(CheckString.hasOnlyLetters(unicode), s, self());
+        return create(CheckString.hasOnlyLetters(unicode), s, "");
     }
 
     /**
@@ -85,7 +85,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasOnlyLetters(){
-        return new Chain<>(CheckString.hasOnlyLetters(true), s, self());
+        return create(CheckString.hasOnlyLetters(true), s, "");
     }
 
     /**
@@ -94,7 +94,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasOnlyDigits(){
-        return new Chain<>(CheckString.hasOnlyDigits(), s, self());
+        return create(CheckString.hasOnlyDigits(), s, "");
     }
 
     /**
@@ -104,7 +104,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isNotEmpty(){
-        return new Chain<>(CheckString.isNotEmpty(), s, self());
+        return create(CheckString.isNotEmpty(), s, "");
     }
 
 
@@ -113,7 +113,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasStartWhitespace(){
-        return new Chain<>(CheckString.noWhitespaceStart(), s, self());
+        return create(CheckString.noWhitespaceStart(), s, "");
     }
 
 
@@ -122,7 +122,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasEndWhitespace(){
-        return new Chain<>(CheckString.noWhitespaceEnd(), s, self());
+        return create(CheckString.noWhitespaceEnd(), s, "");
     }
 
     /**
@@ -133,7 +133,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
         public Chain<String, StringHandler> isTrimmed(){
-            return new Chain<>(CheckString.isTrimmed(), s, self());
+            return create(CheckString.isTrimmed(), s, "");
         }
 
 }

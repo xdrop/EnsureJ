@@ -14,7 +14,7 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
     public Chain<T, ListHandler<T>> all(final Predicate<T> pred){
 
-        return new Chain<>(new Predicate<T>() {
+        return create(new Predicate<T>() {
             @Override
             public boolean eval(T in) {
                 for(T t: arg){
@@ -25,14 +25,14 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
                 return true;
             }
-        },null, self());
+        },null, "");
 
 
     }
 
     public Chain<T, ListHandler<T>> any(final Predicate<T> pred){
 
-        return new Chain<>(new Predicate<T>() {
+        return create(new Predicate<T>() {
             @Override
             public boolean eval(T in) {
                 for(T t: arg){
@@ -43,7 +43,7 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
                 return false;
             }
-        },null, self());
+        },null, "");
 
 
     }
@@ -56,7 +56,7 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
     public Chain<Object, ListHandler<T>> any() {
 
-        return new Chain<>(new Predicate<Object>() {
+        return create(new Predicate<Object>() {
             @Override
             public boolean eval(Object in) {
                 for(T t: arg){
@@ -68,13 +68,13 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
                 return false;
             }
-        },null, self());
+        },null, "");
 
     }
 
     public Chain<Object, ListHandler<T>> all() {
 
-        return new Chain<>(new Predicate<Object>() {
+        return create(new Predicate<Object>() {
             @Override
             public boolean eval(Object in) {
                 for(T t: arg){
@@ -86,7 +86,7 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
                 return true;
             }
-        },null, self());
+        },null, "");
 
     }
 }

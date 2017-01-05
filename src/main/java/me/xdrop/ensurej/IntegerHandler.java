@@ -11,15 +11,15 @@ public class IntegerHandler extends Handler<IntegerHandler> {
     }
 
     public Chain<Integer, IntegerHandler> isPositive(){
-        return new Chain<>(CheckInt.isPositive(), a, self());
+        return create(CheckInt.isPositive(), a, "");
     }
 
     public Chain<Integer, IntegerHandler> isNegative(){
-        return new Chain<>(CheckInt.isNegative(), a, self());
+        return create(CheckInt.isNegative(), a, "");
     }
 
     public Chain<Integer, IntegerHandler> inRange(int lower, int upper){
-        return new Chain<>(CheckInt.inRange(lower, upper), a, self());
+        return create(CheckInt.inRange(lower, upper), a, "");
     }
 
 }

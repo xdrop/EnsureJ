@@ -19,7 +19,7 @@ class StringHandlerTest extends GroovyTestCase {
     }
 
     void testUppercase(){
-        assertTrue val("AAAA").isAllUppercase().e()
+        assertTrue val("AAAA").isAllUppercase(true).e()
         assertTrue val("AAAA1").isAllUppercase(true).e()
         assertFalse val("aaaa").isAllUppercase(true).e()
         assertFalse val("AAAA1").isAllUppercase(false).e()
