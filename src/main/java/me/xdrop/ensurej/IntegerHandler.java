@@ -1,43 +1,25 @@
 package me.xdrop.ensurej;
 
-public class IntegerHandler<T extends ParamCheckFailedException> extends Handler<T, IntegerHandler<T>> {
+import me.xdrop.ensurej.checks.CheckInt;
 
-    private int i;
+public class IntegerHandler extends Handler<IntegerHandler> {
 
-    IntegerHandler(int i) {
-        this.i = i;
+    private int a;
+
+    public IntegerHandler(int a) {
+        this.a = a;
     }
 
-    /**
-     * Asserts that the given number is within the specified range
-     * @param lower The lower <b>inclusive</b> range
-     * @param upper The upper <b>non-inclusive</b> range
-     * @return
-     */
-    public ResultEval<T, IntegerHandler<T>> inRange(int lower, int upper){
-        if(shortCircuit()) return getShortCircuit();
-
-        return result(i >= lower && i < upper, String.format("Range check failed: %d <= %d <%d", lower, i, upper));
+    public Chain<Integer, IntegerHandler> isPositive(){
+        return create(CheckInt.isPositive(), a, "");
     }
 
-    /**
-     * Asserts that the number is positive
-     * @return
-     */
-    public ResultEval<T, IntegerHandler<T>> isPositive(){
-        if(shortCircuit()) return getShortCircuit();
-
-        return result(i >= 0, String.format("Positive check failed: %d was not positive",i));
+    public Chain<Integer, IntegerHandler> isNegative(){
+        return create(CheckInt.isNegative(), a, "");
     }
 
-    /**
-     * Asserts that the number is negative
-     * @return
-     */
-    public ResultEval<T, IntegerHandler<T>> isNegative(){
-        if(shortCircuit()) return getShortCircuit();
-
-        return result(i < 0, String.format("Negative check failed: %d was not negative", i));
+    public Chain<Integer, IntegerHandler> inRange(int lower, int upper){
+        return create(CheckInt.inRange(lower, upper), a, "");
     }
 
 }

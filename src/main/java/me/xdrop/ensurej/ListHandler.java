@@ -1,35 +1,92 @@
 package me.xdrop.ensurej;
 
-import me.xdrop.ensurej.Handler;
-import me.xdrop.ensurej.ParamCheckFailedException;
-
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListHandler<E, T extends ParamCheckFailedException> extends Handler<T, ListHandler<E, T>> {
+public class ListHandler<T> extends Handler<ListHandler<T>> {
 
-    private List<E> lst;
+    private List<T> arg;
+    private List<Predicate<T>> checks = new ArrayList<>(2);
 
-    ListHandler(List<E> lst) {
-        this.lst = lst;
+    public ListHandler(List<T> arg) {
+        this.arg = arg;
     }
 
-    public ResultEval<T, ListHandler<E, T>> all(Predicate<E> p){
-        for(E e : lst){
-            if(!p.pass(e)){
-                return result(false, "all() check failed");
-            }
-        }
+    public Chain<T, ListHandler<T>> all(final Predicate<T> pred){
 
-        return result(true);
+        return create(new Predicate<T>() {
+            @Override
+            public boolean eval(T in) {
+                for(T t: arg){
+                    if(!pred.eval(t))
+                        return false;
+
+                }
+
+                return true;
+            }
+        },null, "");
+
+
     }
 
-    public ResultEval<T, ListHandler<E, T>> any(Predicate<E> p){
-        for(E e : lst){
-            if(p.pass(e)){
-                return result(true);
-            }
-        }
+    public Chain<T, ListHandler<T>> any(final Predicate<T> pred){
 
-        return result(false, "any() check failed");
+        return create(new Predicate<T>() {
+            @Override
+            public boolean eval(T in) {
+                for(T t: arg){
+                    if(pred.eval(t))
+                        return true;
+
+                }
+
+                return false;
+            }
+        },null, "");
+
+
+    }
+
+    public ListHandler<T> add(Predicate<T> pred){
+        checks.add(pred);
+        return this;
+    }
+
+
+    public Chain<Object, ListHandler<T>> any() {
+
+        return create(new Predicate<Object>() {
+            @Override
+            public boolean eval(Object in) {
+                for(T t: arg){
+                    for(Predicate<T> pred: checks){
+                        if(pred.eval(t))
+                            return true;
+                    }
+                }
+
+                return false;
+            }
+        },null, "");
+
+    }
+
+    public Chain<Object, ListHandler<T>> all() {
+
+        return create(new Predicate<Object>() {
+            @Override
+            public boolean eval(Object in) {
+                for(T t: arg){
+                    for(Predicate<T> pred: checks){
+                        if(!pred.eval(t))
+                            return false;
+                    }
+                }
+
+                return true;
+            }
+        },null, "");
+
     }
 }
