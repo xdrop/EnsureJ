@@ -15,7 +15,7 @@ Requests start with `Ensure.that(T)` where `T` is the variable being validated. 
 Ensure.that(T).conditionCheck().and().otherConditionCheck().or().otherConditionCheck().(...)
 ```
 
-Also note that expressions are *short-circuited* ie. as soon as some condition evaluates to `false` in the chain the rest will not be evaluated.
+~~Also note that expressions are *short-circuited* ie. as soon as some condition evaluates to `false` in the chain the rest will not be evaluated.~~
 
 You can also prepend a condition with `not()` which will invert it's result.
 
@@ -48,25 +48,34 @@ Ensure.that(3).not().isPositive().andThrow(MyThrowable.class); // throws MyThrow
 
 ```java
 Ensure.that("HELLO").isAllUppercase.eval(); // yields true
+
 Ensure.that("hello").isAllLowercase.eval(); // yields true
+
 Ensure.that("hello").hasOnlyLetters.eval(); // yields true
 Ensure.that("hello1").hasOnlyLetters.eval(); // yields false
+
+Ensure.that("  h").not().hasWhitespaceStart.eval(); // yields false
+Ensure.that("h   ").not().hasWhitespaceEnd.eval(); // yields false
+
+Ensure.that("  h  ").isTrimmed().eval(); // yields false
+
 Ensure.that("1112").hasOnlyDigits.eval(); // yields true
+
 Ensure.that("wasd").matches("\\w+").eval() // yields true (matches regex)
 ```
 
 ### Lists
 ```java
 List<Object> lst;
-Ensure.that(lst).isAll(obj).eval(); // checks wether all list elements .equal(obj)
+Ensure.that(lst).all(CheckObject.equals(other)).eval(); // checks whether all list elements .equals(other)
 
-List<Number> lst;
-Ensure.that(lst).isAllPositive().eval();
-Ensure.that(lst).isAllNegative().eval();
-Ensure.that(lst).isAllInRange(0,100).eval();
+List<Integer> lst;
+Ensure.that(lst).all(CheckInt.isPositive()).eval();
+Ensure.that(lst).all(CheckInt.isNegative()).eval();
+Ensure.that(lst).all(CheckInt.inRange(0, 100)).eval();
 
 // Java >= 8
-Ensure.that(lst).any(x -> x > 3).eval();
+Ensure.that(lst).all(x -> x > 3).eval();
 
 // Java <= 8
 Ensure.that(lst).all(new Predicate<Integer>() {
