@@ -7,6 +7,24 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class Chain<E, F extends Handler> {
 
+    class Condition {
+        Predicate<E> p;
+        E arg;
+        boolean invert;
+
+        Condition(Predicate<E> p, E arg) {
+            this.p = p;
+            this.arg = arg;
+        }
+
+        Condition(Predicate<E> p, E arg, boolean invert) {
+            this.p = p;
+            this.arg = arg;
+            this.invert = invert;
+        }
+
+    }
+
     enum Operation {
         AND {
             boolean apply(boolean lhs, boolean rhs) {
@@ -18,31 +36,11 @@ public class Chain<E, F extends Handler> {
                 return lhs || rhs;
             }
         };
-
         abstract boolean apply(boolean lhs, boolean rhs);
-    }
-
-    class Tuple{
-        Predicate<E> p;
-        E arg;
-        boolean invert;
-
-        Tuple(Predicate<E> p, E arg) {
-            this.p = p;
-            this.arg = arg;
-        }
-
-        Tuple(Predicate<E> p, E arg, boolean invert) {
-            this.p = p;
-            this.arg = arg;
-            this.invert = invert;
-        }
 
     }
 
-
-
-    private List<Tuple> chainedConditions;
+    private List<Condition> chainedConditions;
     private List<Operation> ops;
     private F chain;
     private String msg;
@@ -52,7 +50,7 @@ public class Chain<E, F extends Handler> {
         this.ops = new ArrayList<>();
         this.chain = chain;
         this.msg = msg;
-        chainedConditions.add(new Tuple(p, arg));
+        chainedConditions.add(new Condition(p, arg));
     }
 
     Chain(Predicate<E> p, E arg, F chain, String msg, boolean invert) {
@@ -60,118 +58,187 @@ public class Chain<E, F extends Handler> {
         this.ops = new ArrayList<>();
         this.chain = chain;
         this.msg = msg;
-        chainedConditions.add(new Tuple(p, arg, invert));
+        chainedConditions.add(new Condition(p, arg, invert));
     }
 
-    private static boolean eval(Chain.Tuple t){
-        if(t.invert)
+    /**
+     * Evaluate a condition, ie. apply the argument to the predicate
+     * and return the result
+     *
+     * @param t Condition to be checked
+     * @return The boolean evaluation of the predicate/argument pair
+     */
+    private static boolean eval(Chain.Condition t) {
+        if (t.invert)
             return !t.p.eval(t.arg);
         else
             return t.p.eval(t.arg);
     }
 
-    public F and(){
+    /**
+     * Combine conditions using AND
+     * @return
+     */
+    public F and() {
         this.ops.add(Operation.AND);
         chain.visit(this);
         return chain;
     }
 
-    public F or(){
+    /**
+     * Combine conditions using OR
+     * @return
+     */
+    public F or() {
         this.ops.add(Operation.OR);
         chain.visit(this);
         return chain;
     }
 
-    void visit(Predicate<E> p, E arg){
-        chainedConditions.add(new Tuple(p, arg));
-    }
-    void visit(Predicate<E> p, E arg, boolean invert){
-        chainedConditions.add(new Tuple(p, arg, invert));
+    void visit(Predicate<E> p, E arg) {
+        chainedConditions.add(new Condition(p, arg));
     }
 
+    void visit(Predicate<E> p, E arg, boolean invert) {
+        chainedConditions.add(new Condition(p, arg, invert));
+    }
 
-    private boolean _eval(){
-        if (ops.size() < 1){
+    private boolean _eval() {
+        if (ops.size() < 1) {
             return eval(chainedConditions.get(0));
-        } else{
+        } else {
             int i = 1;
             boolean lhs;
 
             boolean r1 = eval(chainedConditions.get(0));
             boolean r2 = eval(chainedConditions.get(1));
 
-
             lhs = ops.get(0).apply(r1, r2);
 
-            // Pop operations and evaluate predicates until something evaluates to true
-            // or all to false
-            while(i < ops.size()){
-                boolean r = eval(chainedConditions.get(i+1));
+            // evaluate stored operations
+            while (i < ops.size()) {
+                boolean r = eval(chainedConditions.get(i + 1));
                 Operation op = ops.get(i);
 
                 lhs = op.apply(lhs, r);
-
-//                if (op == Operation.AND && !lhs){
-//                    return false;
-//                }
-//
-//                if (op == Operation.OR && lhs){
-//                    return true;
-//                }
-
                 i++;
-
             }
 
             return lhs;
         }
     }
 
-    public boolean andEval(){
+    /**
+     * Evaluate this validation test
+     * @return True if the validation passes, false otherwise
+     */
+    public boolean andEval() {
         return _eval();
     }
 
-    public boolean e(){
+    /**
+     * Evaluate this validation test
+     * @return True if the validation passes, false otherwise
+     */
+    public boolean e() {
         return _eval();
     }
 
-    public boolean eval(){
+    /**
+     * Evaluate this validation test
+     * @return True if the validation passes, false otherwise
+     */
+    public boolean eval() {
         return _eval();
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @return
+     */
     public void t() throws ParamCheckFailedException {
         andThrow();
     }
 
-    public void t(String msg) throws ParamCheckFailedException{
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @return
+     */
+    public void t(String msg) throws ParamCheckFailedException {
         andThrow(msg);
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @param ex Custom exception to be thrown
+     * @param message The exception message
+     */
     public <L extends Throwable> void t(Class<L> ex, String message) throws L {
         andThrow(ex, message);
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @param ex Custom exception to be thrown
+     * @throws L Exception when validation fails
+     */
     public <L extends Throwable> void t(Class<L> ex) throws L {
         andThrow(ex);
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @param ex Custom exception to be thrown
+     * @throws L Exception when validation fails
+     */
     public <L extends Throwable> void andThrow(Class<L> ex) throws L {
-        if(!_eval() && msg!=null) throwCustom(ex, msg);
-        if(!_eval() && msg==null) throwCustom(ex);
+        if (!_eval() && msg != null) throwCustom(ex, msg);
+        if (!_eval() && msg == null) throwCustom(ex);
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @param ex Custom exception to be thrown
+     * @param message The exception message
+     * @throws L Exception when validation fails
+     */
     public <L extends Throwable> void andThrow(Class<L> ex, String message) throws L {
-        if(!_eval() && msg!=null) throwCustom(ex, msg);
+        if (!_eval() && msg != null) throwCustom(ex, msg);
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @throws ParamCheckFailedException Exception when validation fails
+     */
     public void andThrow() throws ParamCheckFailedException {
         boolean b = _eval();
-        if(!b && msg!=null) throw new ParamCheckFailedException(msg);
-        if(!b) throw new ParamCheckFailedException();
+        if (!b && msg != null) throw new ParamCheckFailedException(msg);
+        if (!b) throw new ParamCheckFailedException();
     }
 
+    /**
+     * Evaluate this validation test and throw an exception if the validation
+     * fails.
+     *
+     * @param message The exception message
+     * @throws ParamCheckFailedException Exception when validation fails
+     */
     public void andThrow(String message) throws ParamCheckFailedException {
-        if(!_eval() && message!=null) throw new ParamCheckFailedException(message);
+        if (!_eval() && message != null) throw new ParamCheckFailedException(message);
     }
 
     private <L extends Throwable> void throwCustom(Class<L> ex, String message) throws L {
@@ -186,7 +253,6 @@ public class Chain<E, F extends Handler> {
             e.printStackTrace();
         }
     }
-
 
     private <L extends Throwable> void throwGeneric(Class<L> ex, String message) throws L {
         try {
