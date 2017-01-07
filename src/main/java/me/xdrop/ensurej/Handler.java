@@ -7,7 +7,7 @@ abstract class Handler<E extends Handler<E>> {
     private Chain<Object, E> toReturn;
 
 
-    private E self(){
+    E self(){
         return (E) this;
     }
 

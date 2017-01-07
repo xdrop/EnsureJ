@@ -3,20 +3,20 @@ package me.xdrop.ensurej;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListHandler<T> extends Handler<ListHandler<T>> {
+public class ListHandler<T> extends AggregateHandler<T, ListHandler<T>> {
 
-    private List<T> arg;
     private List<Predicate<T>> checks = new ArrayList<>(2);
 
-    public ListHandler(List<T> arg) {
-        this.arg = arg;
+    ListHandler(List<T> arg) {
+        super(arg);
     }
 
-    public Chain<T, ListHandler<T>> all(final Predicate<T> pred){
 
-        return create(new Predicate<T>() {
+    public Chain<Object, ListHandler<T>> all(final Predicate<T> pred){
+
+        return create(new Predicate<Object>() {
             @Override
-            public boolean eval(T in) {
+            public boolean eval(Object in) {
                 for(T t: arg){
                     if(!pred.eval(t))
                         return false;
@@ -48,45 +48,6 @@ public class ListHandler<T> extends Handler<ListHandler<T>> {
 
     }
 
-    public ListHandler<T> add(Predicate<T> pred){
-        checks.add(pred);
-        return this;
-    }
 
 
-    public Chain<Object, ListHandler<T>> any() {
-
-        return create(new Predicate<Object>() {
-            @Override
-            public boolean eval(Object in) {
-                for(T t: arg){
-                    for(Predicate<T> pred: checks){
-                        if(pred.eval(t))
-                            return true;
-                    }
-                }
-
-                return false;
-            }
-        },null, "");
-
-    }
-
-    public Chain<Object, ListHandler<T>> all() {
-
-        return create(new Predicate<Object>() {
-            @Override
-            public boolean eval(Object in) {
-                for(T t: arg){
-                    for(Predicate<T> pred: checks){
-                        if(!pred.eval(t))
-                            return false;
-                    }
-                }
-
-                return true;
-            }
-        },null, "");
-
-    }
 }

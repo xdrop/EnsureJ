@@ -1,5 +1,6 @@
 package me.xdrop.ensurej
 
+import static me.xdrop.ensurej.checks.CheckInt.inRange
 import static me.xdrop.ensurej.checks.CheckInt.isNegative
 import static me.xdrop.ensurej.checks.CheckInt.isPositive
 
@@ -19,9 +20,14 @@ class ListHandlerTest extends GroovyTestCase {
 
     void testPositive(){
         List<Integer> lst = [1,2,-3,4]
-        List<Double> lst2 = [1.0, 2.0, 3.0, 4.0] as List<Double>
         assertFalse Ensure.that(lst).all(isPositive()).andEval()
         assertTrue Ensure.that(lst).any(isNegative()).andEval()
+        assertTrue Ensure.that(lst).add(inRange(-100,100))
+                .add(inRange(-4,10))
+                .all().eval()
+        assertFalse  Ensure.that(lst).add(inRange(-100,100))
+                .add(inRange(0,10))
+                .all().eval()
         assertTrue Ensure.that(lst).add(isPositive())
                                     .add(isNegative())
                                     .any().eval()
