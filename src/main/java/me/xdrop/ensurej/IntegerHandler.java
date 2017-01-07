@@ -22,4 +22,12 @@ public class IntegerHandler extends Handler<IntegerHandler> {
         return create(CheckInt.inRange(lower, upper), a, "Number was not in range");
     }
 
+    public Chain<Integer, IntegerHandler> greaterThan(int limit){
+        return create(CheckInt.greaterThan(limit), a, "Number was not greater than " + limit);
+    }
+
+    public Chain<Integer, IntegerHandler> lessThan(int limit){
+        return create(CheckInt.lessThan(limit), a, "Number was not less than " + limit);
+    }
+
 }
