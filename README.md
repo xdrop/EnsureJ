@@ -67,7 +67,7 @@ Ensure.that("wasd").matches("\\w+").eval() // yields true (matches regex)
 ### Lists
 ```java
 List<Object> lst;
-Ensure.that(lst).all(CheckObject.equals(other)).eval(); // checks whether all list elements .equals(other)
+Ensure.that(lst).all(CheckObject.equal(other)).eval(); // checks whether all list elements .equals(other)
 
 List<Integer> lst;
 Ensure.that(lst).all(CheckInt.isPositive()).eval();
