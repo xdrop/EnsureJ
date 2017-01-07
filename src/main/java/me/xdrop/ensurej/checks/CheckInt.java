@@ -32,5 +32,24 @@ public class CheckInt {
         };
     }
 
+    public static Predicate<Integer> greaterThan(final int limit){
+        return new Predicate<Integer>() {
+            @Override
+            public boolean eval(Integer in) {
+                return in > limit;
+            }
+        };
+    }
+
+    public static Predicate<Integer> lessThan(final int limit){
+        return new Predicate<Integer>() {
+            @Override
+            public boolean eval(Integer in) {
+                return in < limit;
+            }
+        };
+    }
+
+
 
 }
