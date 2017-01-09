@@ -18,7 +18,8 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllLowercase(){
-        return create(CheckString.isAllLowercase(true), s, "");
+        return create(CheckString.isAllLowercase(true),
+                s, "String not all lowercase");
     }
 
     /**
@@ -30,7 +31,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllLowercase(boolean allowNonChar){
-        return create(CheckString.isAllLowercase(allowNonChar), s, "");
+        return create(CheckString.isAllLowercase(allowNonChar), s, "String not all lowercase");
     }
 
     /**
@@ -40,7 +41,8 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllUppercase(){
-        return create(CheckString.isAllUppercase(true), s, "");
+        return create(CheckString.isAllUppercase(true), s,
+                "String not all uppercase");
     }
 
     /**
@@ -52,7 +54,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllUppercase(boolean allowNonChar){
-        return create(CheckString.isAllUppercase(allowNonChar), s, "");
+        return create(CheckString.isAllUppercase(allowNonChar), s, "String not all uppercase");
     }
 
 
@@ -63,7 +65,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> matches(String regex){
-        return create(CheckString.matches(regex), s, "");
+        return create(CheckString.matches(regex), s, "String doesn't match pattern");
     }
 
 

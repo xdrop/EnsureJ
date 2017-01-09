@@ -2,6 +2,8 @@
 <img src="http://i.imgur.com/cYFDzZO.png" width="129px"/>
 
 [![Build Status](https://travis-ci.org/xdrop/EnsureJ.svg?branch=master)](https://travis-ci.org/xdrop/EnsureJ)
+[![Version](https://img.shields.io/badge/version-0.0.1--alpha-blue.svg
+)](https://travis-ci.org/xdrop/EnsureJ)
 
 A validation framework for Java focused on a clear user friendly API with lots of pre-defined tests. The framework is still in a very early stage with lots of checks that can be added, so **contributions are encouraged and very welcomed!**
 

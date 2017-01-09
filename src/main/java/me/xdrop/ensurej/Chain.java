@@ -40,10 +40,12 @@ public class Chain<E, F extends Handler> {
 
     }
 
+
     private List<Condition> chainedConditions;
     private List<Operation> ops;
     private F chain;
     private String msg;
+
 
     Chain(Predicate<E> p, E arg, F chain, String msg) {
         this.chainedConditions = new ArrayList<>(4);
