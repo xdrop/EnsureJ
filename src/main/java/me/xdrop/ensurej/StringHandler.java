@@ -31,7 +31,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllLowercase(boolean allowNonChar){
-        return create(CheckString.isAllLowercase(allowNonChar), s, "String not all lowercase");
+        return create(CheckString.isAllLowercase(allowNonChar), s, "Lowercase check failed");
     }
 
     /**
@@ -42,7 +42,7 @@ public class StringHandler extends Handler<StringHandler> {
      */
     public Chain<String, StringHandler> isAllUppercase(){
         return create(CheckString.isAllUppercase(true), s,
-                "String not all uppercase");
+                "Uppercase check failed");
     }
 
     /**
@@ -54,7 +54,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isAllUppercase(boolean allowNonChar){
-        return create(CheckString.isAllUppercase(allowNonChar), s, "String not all uppercase");
+        return create(CheckString.isAllUppercase(allowNonChar), s, "Uppercase check failed");
     }
 
 
@@ -65,7 +65,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> matches(String regex){
-        return create(CheckString.matches(regex), s, "String doesn't match pattern");
+        return create(CheckString.matches(regex), s, "Pattern check failed");
     }
 
 
@@ -78,7 +78,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasOnlyLetters(boolean unicode){
-        return create(CheckString.hasOnlyLetters(unicode), s, "");
+        return create(CheckString.hasOnlyLetters(unicode), s, "Letter only check failed");
     }
 
     /**
@@ -87,7 +87,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasOnlyLetters(){
-        return create(CheckString.hasOnlyLetters(true), s, "");
+        return create(CheckString.hasOnlyLetters(true), s, "Letter only check failed");
     }
 
     /**
@@ -96,7 +96,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasOnlyDigits(){
-        return create(CheckString.hasOnlyDigits(), s, "");
+        return create(CheckString.hasOnlyDigits(), s, "Digit only check failed");
     }
 
     /**
@@ -106,7 +106,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> isNotEmpty(){
-        return create(CheckString.isNotEmpty(), s, "");
+        return create(CheckString.isNotEmpty(), s, "Empty check failed");
     }
 
 
@@ -115,7 +115,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasStartWhitespace(){
-        return create(CheckString.hasWhitespaceStart(), s, "");
+        return create(CheckString.hasWhitespaceStart(), s, "Start whitespace check failed");
     }
 
 
@@ -124,7 +124,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> hasEndWhitespace(){
-        return create(CheckString.hasWhitespaceEnd(), s, "");
+        return create(CheckString.hasWhitespaceEnd(), s, "End whitespace check failed");
     }
 
     /**
@@ -135,7 +135,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
         public Chain<String, StringHandler> isTrimmed(){
-            return create(CheckString.isTrimmed(), s, "");
+            return create(CheckString.isTrimmed(), s, "Trimmed check failed");
         }
 
 }

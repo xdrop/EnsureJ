@@ -4,6 +4,13 @@ import static Ensure.val;
 
 class StringHandlerTest extends GroovyTestCase {
 
+    void testIr(){
+        def lst = [new ArrayList<>(), new LinkedList<>()]
+        def a = lst.get(0)
+        print(a)
+        print(lst.getClass())
+    }
+
     void testMatches() {
         assertTrue val("aaaaa").matches("\\w+").e()
         assertFalse val("aaaaa").matches("\\d+").e()
