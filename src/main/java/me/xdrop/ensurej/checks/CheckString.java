@@ -141,4 +141,16 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> lengthBetween(final int lower, final int upper){
+
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                int length = in.length();
+                return length >= lower && length < upper;
+            }
+        }
+
+    }
 }

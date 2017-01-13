@@ -17,7 +17,7 @@ public class StringHandler extends Handler<StringHandler> {
      *
      * @return
      */
-    public Chain<String, StringHandler> isAllLowercase(){
+    public Chain<String, StringHandler> isAllLowercase() {
         return create(CheckString.isAllLowercase(true),
                 s, "String not all lowercase");
     }
@@ -30,7 +30,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @param allowNonChar Non-character entries are allowed
      * @return
      */
-    public Chain<String, StringHandler> isAllLowercase(boolean allowNonChar){
+    public Chain<String, StringHandler> isAllLowercase(boolean allowNonChar) {
         return create(CheckString.isAllLowercase(allowNonChar), s, "Lowercase check failed");
     }
 
@@ -40,7 +40,7 @@ public class StringHandler extends Handler<StringHandler> {
      *
      * @return
      */
-    public Chain<String, StringHandler> isAllUppercase(){
+    public Chain<String, StringHandler> isAllUppercase() {
         return create(CheckString.isAllUppercase(true), s,
                 "Uppercase check failed");
     }
@@ -53,7 +53,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @param allowNonChar Non-character entries are allowed
      * @return
      */
-    public Chain<String, StringHandler> isAllUppercase(boolean allowNonChar){
+    public Chain<String, StringHandler> isAllUppercase(boolean allowNonChar) {
         return create(CheckString.isAllUppercase(allowNonChar), s, "Uppercase check failed");
     }
 
@@ -64,7 +64,7 @@ public class StringHandler extends Handler<StringHandler> {
      * @param regex Regex pattern
      * @return
      */
-    public Chain<String, StringHandler> matches(String regex){
+    public Chain<String, StringHandler> matches(String regex) {
         return create(CheckString.matches(regex), s, "Pattern check failed");
     }
 
@@ -77,7 +77,7 @@ public class StringHandler extends Handler<StringHandler> {
      *                unicode letters too.
      * @return
      */
-    public Chain<String, StringHandler> hasOnlyLetters(boolean unicode){
+    public Chain<String, StringHandler> hasOnlyLetters(boolean unicode) {
         return create(CheckString.hasOnlyLetters(unicode), s, "Letter only check failed");
     }
 
@@ -86,7 +86,7 @@ public class StringHandler extends Handler<StringHandler> {
      *
      * @return
      */
-    public Chain<String, StringHandler> hasOnlyLetters(){
+    public Chain<String, StringHandler> hasOnlyLetters() {
         return create(CheckString.hasOnlyLetters(true), s, "Letter only check failed");
     }
 
@@ -95,7 +95,7 @@ public class StringHandler extends Handler<StringHandler> {
      *
      * @return
      */
-    public Chain<String, StringHandler> hasOnlyDigits(){
+    public Chain<String, StringHandler> hasOnlyDigits() {
         return create(CheckString.hasOnlyDigits(), s, "Digit only check failed");
     }
 
@@ -105,25 +105,27 @@ public class StringHandler extends Handler<StringHandler> {
      *
      * @return
      */
-    public Chain<String, StringHandler> isNotEmpty(){
+    public Chain<String, StringHandler> isNotEmpty() {
         return create(CheckString.isNotEmpty(), s, "Empty check failed");
     }
 
 
     /**
      * Checks whether the String does not start with whitespace
+     *
      * @return
      */
-    public Chain<String, StringHandler> hasStartWhitespace(){
+    public Chain<String, StringHandler> hasStartWhitespace() {
         return create(CheckString.hasWhitespaceStart(), s, "Start whitespace check failed");
     }
 
 
     /**
      * Checks whether the String does not end with whitespace
+     *
      * @return
      */
-    public Chain<String, StringHandler> hasEndWhitespace(){
+    public Chain<String, StringHandler> hasEndWhitespace() {
         return create(CheckString.hasWhitespaceEnd(), s, "End whitespace check failed");
     }
 
@@ -134,8 +136,19 @@ public class StringHandler extends Handler<StringHandler> {
      *
      * @return
      */
-        public Chain<String, StringHandler> isTrimmed(){
-            return create(CheckString.isTrimmed(), s, "Trimmed check failed");
-        }
+    public Chain<String, StringHandler> isTrimmed() {
+        return create(CheckString.isTrimmed(), s, "Trimmed check failed");
+    }
+
+    /**
+     * Checks whether the string is of length between {@param lower} and {@param upper}.
+     *
+     * @param lower The <strong>inclusive</strong> lower bound
+     * @param upper The <strong>non-inclusive</strong> upper bound
+     * @return
+     */
+    public Chain<String, StringHandler> lengthBetween(int lower, int upper){
+        return create(CheckString.lengthBetween(lower, upper), s, "Number of characters check failed");
+    }
 
 }
