@@ -150,7 +150,7 @@ public class CheckString {
                 int length = in.length();
                 return length >= lower && length < upper;
             }
-        }
+        };
 
     }
 }
