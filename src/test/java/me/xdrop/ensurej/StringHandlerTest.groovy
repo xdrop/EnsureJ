@@ -46,4 +46,10 @@ class StringHandlerTest extends GroovyTestCase {
         assertTrue val("111").hasOnlyDigits().e()
         assertFalse val("111a").hasOnlyDigits().e()
     }
+
+    void testLengthBetween(){
+        assertTrue val("111").lengthBetween(0,4).e()
+        assertFalse val("111").lengthBetween(0,3).e()
+        assertTrue  val("111").lengthBetween(-100,4).e()
+    }
 }
