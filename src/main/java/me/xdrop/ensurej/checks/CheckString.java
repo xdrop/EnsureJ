@@ -1,5 +1,6 @@
 package me.xdrop.ensurej.checks;
 
+import me.xdrop.ensurej.Chain;
 import me.xdrop.ensurej.Predicate;
 
 import java.util.regex.Matcher;
@@ -152,5 +153,19 @@ public class CheckString {
             }
         };
 
+    }
+
+    public static Predicate<String> allLetters(final Character c){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                for (int i = 0; i < in.length(); i++){
+                    if(in.charAt(i) != c){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
     }
 }
