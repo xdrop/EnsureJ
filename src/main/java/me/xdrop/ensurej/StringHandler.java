@@ -2,6 +2,9 @@ package me.xdrop.ensurej;
 
 import me.xdrop.ensurej.checks.CheckString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringHandler extends Handler<StringHandler> {
 
     private String s;
@@ -149,6 +152,16 @@ public class StringHandler extends Handler<StringHandler> {
      */
     public Chain<String, StringHandler> lengthBetween(int lower, int upper){
         return create(CheckString.lengthBetween(lower, upper), s, "Number of characters check failed");
+    }
+
+    /**
+     * Checks whether all characters in the string are equal to the given character.
+     *
+     * @param c The character that all letters must equal
+     * @return
+     */
+    public Chain<String, StringHandler> allEqual(Character c){
+        return create(CheckString.allLetters(c), s, "All characters equal to '" + c + "' failed");
     }
 
 }
