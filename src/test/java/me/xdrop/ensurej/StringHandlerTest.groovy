@@ -52,4 +52,10 @@ class StringHandlerTest extends GroovyTestCase {
         assertFalse val("111").lengthBetween(0,3).e()
         assertTrue  val("111").lengthBetween(-100,4).e()
     }
+
+    void testAllEqual(){
+        assertTrue val("aaaaa").allEqual('a' as Character).e()
+        assertTrue  val("1111").allEqual('1' as Character).e()
+        assertFalse val("aaaaab").allEqual('a' as Character).e()
+    }
 }
