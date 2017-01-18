@@ -168,4 +168,13 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> allEqual() {
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                return allLetters(in.charAt(0)).eval(in);
+            }
+        };
+    }
 }

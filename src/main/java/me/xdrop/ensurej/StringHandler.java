@@ -161,7 +161,16 @@ public class StringHandler extends Handler<StringHandler> {
      * @return
      */
     public Chain<String, StringHandler> allEqual(Character c){
-        return create(CheckString.allLetters(c), s, "All characters equal to '" + c + "' failed");
+        return create(CheckString.allLetters(c), s, "All characters equal to '" + c + "' check failed");
+    }
+
+    /**
+     * Checks whether all characters in the string are all equal to each other.
+     *
+     * @return
+     */
+    public Chain<String, StringHandler> allEqual(){
+        return create(CheckString.allEqual(), s, "All characters equal check failed");
     }
 
 }
