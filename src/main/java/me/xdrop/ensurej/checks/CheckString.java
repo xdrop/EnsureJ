@@ -177,4 +177,42 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> isInteger(){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                try {
+                    Integer.parseInt(in);
+                    return true;
+                } catch (NumberFormatException e){
+                    return false;
+                }
+            }
+        };
+    }
+
+    public static Predicate<String> isDecimal(){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                try {
+                    Double.parseDouble(in);
+                    Float.parseFloat(in);
+                    return true;
+                } catch (NumberFormatException e){
+                    return false;
+                }
+            }
+        };
+    }
+
+    public static Predicate<String> isNumber() {
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                return isInteger().eval(in) || isDecimal().eval(in);
+            }
+        };
+    }
 }
