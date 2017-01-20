@@ -215,4 +215,18 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> fromSet(final String ... set){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                for (String s : set){
+                    if (s.equals(in)){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+    }
 }
