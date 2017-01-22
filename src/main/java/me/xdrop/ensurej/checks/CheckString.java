@@ -1,5 +1,6 @@
 package me.xdrop.ensurej.checks;
 
+import me.xdrop.ensurej.Chain;
 import me.xdrop.ensurej.Predicate;
 
 import java.util.regex.Matcher;
@@ -138,6 +139,93 @@ public class CheckString {
             @Override
             public boolean eval(String s) {
                 return !hasWhitespaceStart().eval(s) && !hasWhitespaceEnd().eval(s);
+            }
+        };
+    }
+
+    public static Predicate<String> lengthBetween(final int lower, final int upper){
+
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                int length = in.length();
+                return length >= lower && length < upper;
+            }
+        };
+
+    }
+
+    public static Predicate<String> allLetters(final Character c){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                for (int i = 0; i < in.length(); i++){
+                    if(in.charAt(i) != c){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
+    }
+
+    public static Predicate<String> allEqual() {
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                return allLetters(in.charAt(0)).eval(in);
+            }
+        };
+    }
+
+    public static Predicate<String> isInteger(){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                try {
+                    Integer.parseInt(in);
+                    return true;
+                } catch (NumberFormatException e){
+                    return false;
+                }
+            }
+        };
+    }
+
+    public static Predicate<String> isDecimal(){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                try {
+                    Double.parseDouble(in);
+                    Float.parseFloat(in);
+                    return true;
+                } catch (NumberFormatException e){
+                    return false;
+                }
+            }
+        };
+    }
+
+    public static Predicate<String> isNumber() {
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                return isInteger().eval(in) || isDecimal().eval(in);
+            }
+        };
+    }
+
+    public static Predicate<String> fromSet(final String ... set){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                for (String s : set){
+                    if (s.equals(in)){
+                        return true;
+                    }
+                }
+                return false;
             }
         };
     }

@@ -4,6 +4,13 @@ import static Ensure.val;
 
 class StringHandlerTest extends GroovyTestCase {
 
+    void testIr(){
+        def lst = [new ArrayList<>(), new LinkedList<>()]
+        def a = lst.get(0)
+        print(a)
+        print(lst.getClass())
+    }
+
     void testMatches() {
         assertTrue val("aaaaa").matches("\\w+").e()
         assertFalse val("aaaaa").matches("\\d+").e()
@@ -38,5 +45,19 @@ class StringHandlerTest extends GroovyTestCase {
     void testHasOnlyDigits() {
         assertTrue val("111").hasOnlyDigits().e()
         assertFalse val("111a").hasOnlyDigits().e()
+    }
+
+    void testLengthBetween(){
+        assertTrue val("111").lengthBetween(0,4).e()
+        assertFalse val("111").lengthBetween(0,3).e()
+        assertTrue  val("111").lengthBetween(-100,4).e()
+    }
+
+    void testAllEqual(){
+        assertTrue val("aaaaa").allEqual('a' as Character).e()
+        assertTrue  val("1111").allEqual('1' as Character).e()
+        assertFalse val("aaaaab").allEqual('a' as Character).e()
+        assertTrue val("aaa").allEqual().e()
+        assertFalse val("aab").allEqual().e()
     }
 }
