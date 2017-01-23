@@ -24,43 +24,47 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
             this.keyPredicates = new ArrayList<>();
             keyPredicates.add(keyPredicate);
         }
+
+        public KeyHandler<T> add(Predicate<K> keyPredicate){
+            keyPredicates.add(keyPredicate);
+            return this;
+        }
+
     }
 
     class ValueHandler<T> extends Handler<KeyHandler<T>> {
         private List<Predicate<T>> valuePredicates;
 
-        public ValueHandler(List<Predicate<T>> keyPredicates) {
-            this.valuePredicates = keyPredicates;
+        public ValueHandler(List<Predicate<T>> valuePredicates) {
+            this.valuePredicates = valuePredicates;
         }
 
-        public ValueHandler(Predicate<T> keyPredicate) {
+        public ValueHandler(Predicate<T> valuePredicate) {
             this.valuePredicates = new ArrayList<>();
-            valuePredicates.add(keyPredicate);
+            valuePredicates.add(valuePredicate);
         }
 
+        public ValueHandler<T> add(Predicate<T> valuePredicate){
+            valuePredicates.add(valuePredicate);
+            return this;
+        }
 
     }
 
-
-
     public KeyHandler<K> keys(Predicate<K> keyCheck) {
-
         return new KeyHandler<K>(keyCheck);
     }
 
     public KeyHandler<K> keys(Predicate<K> ... keyChecks) {
-        return new KeyHandler<K>(Arrays.asList(keyChecks));
+        return new KeyHandler<>(Arrays.asList(keyChecks));
     }
 
-
-    public Predicate<Void> values(Predicate<V> valueChecks) {
-        //valuePredicates.add(valueChecks);
-        return null;
+    public ValueHandler<V> values(Predicate<V> valueCheck) {
+        return new ValueHandler<>(Arrays.asList(valueCheck));
     }
 
-    public Predicate<Void> values(Predicate<V> ... valueChecks) {
-        //valuePredicates.addAll(Arrays.asList(valueChecks));
-        return null;
+    public ValueHandler<V> values(Predicate<V> ... valueChecks) {
+        return new ValueHandler<>(Arrays.asList(valueChecks));
     }
 
 }
