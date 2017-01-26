@@ -39,6 +39,15 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
             }, null, MapHandler.this, "One or more key checks failed");
         }
 
+        public Chain<Void, MapHandler<K,V>> any(){
+            return new Chain<Void, MapHandler<K, V>>(new Predicate<Void>() {
+                @Override
+                public boolean eval(Void in) {
+                    return false;
+                }
+            }, null, MapHandler.this, "One or more key checks failed");
+        }
+
     }
 
     class ValueHandler<T> extends Handler<KeyHandler<T>> {
@@ -65,6 +74,10 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
                     return false;
                 }
             }, null, MapHandler.this, "One or more value checks failed");
+        }
+
+        public Chain<Void, MapHandler<K,V>> any(){
+            return new Chain<Void, MapHandler<K, V>>(null, null, MapHandler.this, "One or more key checks failed");
         }
 
     }
