@@ -1,17 +1,14 @@
 package me.xdrop.ensurej;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws ParamCheckFailedException {
-        List<Float> lst = new ArrayList<Float>();
-       // Ensure.that(-2f).isPositive();
-//        boolean s2 = Ensure.that(lst).any(FloatingPointHandler.allPositive()).e();
-
-//        System.out.println(s2);
-
-
+    public static void main(String[] args) throws ParamCheckFailedException, UnsupportedEncodingException {
+        List<Float> lst = new ArrayList<>();
     }
 }

@@ -1,9 +1,6 @@
 package me.xdrop.ensurej;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
 
@@ -15,6 +12,7 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
 
     class KeyHandler<T> extends Handler<KeyHandler<T>> {
         private List<Predicate<K>> keyPredicates;
+        private Set<K> keys;
 
         public KeyHandler(List<Predicate<K>> keyPredicates) {
             this.keyPredicates = keyPredicates;
@@ -43,7 +41,19 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
             return new Chain<>(new Predicate<Void>() {
                 @Override
                 public boolean eval(Void in) {
-                    return false;
+                    for(Predicate<K> p : keyPredicates){
+                        boolean truth = true;
+                        for (K key : keys){
+                            if(!p.eval(key)) {
+                             truth = false;
+                            }
+                        }
+
+                        if(truth){
+                            return true;
+                        }
+                    }
+                    return true;
                 }
             }, null, MapHandler.this, "One or more key checks failed");
         }
