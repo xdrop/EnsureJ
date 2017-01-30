@@ -32,7 +32,15 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
             return new Chain<>(new Predicate<Void>() {
                 @Override
                 public boolean eval(Void in) {
-                    return false;
+                    for(Predicate<K> p : keyPredicates){
+                        boolean truth = true;
+                        for (K key : keys){
+                            if(!p.eval(key)) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
                 }
             }, null, MapHandler.this, "One or more key checks failed");
         }
