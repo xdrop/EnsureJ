@@ -1,5 +1,6 @@
 package me.xdrop.ensurej;
 
+import com.sun.tools.javac.comp.Check;
 import me.xdrop.ensurej.checks.CheckString;
 
 import java.util.ArrayList;
@@ -171,6 +172,16 @@ public class StringHandler extends Handler<StringHandler> {
      */
     public Chain<String, StringHandler> allEqual(){
         return create(CheckString.allEqual(), s, "All characters equal check failed");
+    }
+
+    /**
+     * Checks whether the string represents a valid number. Note that
+     * this includes integers, as well as floating point types
+     *
+     * @return
+     */
+    public Chain<String, StringHandler> isNumber(){
+        return create(CheckString.isNumber(), s, "Number check failed");
     }
 
 }
