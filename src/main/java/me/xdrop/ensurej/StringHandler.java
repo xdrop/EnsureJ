@@ -1,10 +1,7 @@
 package me.xdrop.ensurej;
 
-import com.sun.tools.javac.comp.Check;
 import me.xdrop.ensurej.checks.CheckString;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class StringHandler extends Handler<StringHandler> {
 
