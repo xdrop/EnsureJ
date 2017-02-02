@@ -184,4 +184,14 @@ public class StringHandler extends Handler<StringHandler> {
         return create(CheckString.isNumber(), s, "Number check failed");
     }
 
+    /**
+     * Checks whether the string is part of the set provided
+     *
+     * @param set
+     * @return
+     */
+    public Chain<String, StringHandler> fromSet(String ... set){
+        return create(CheckString.fromSet(set), s, "String in set check failed");
+    }
+
 }
