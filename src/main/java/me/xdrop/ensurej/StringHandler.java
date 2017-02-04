@@ -2,6 +2,8 @@ package me.xdrop.ensurej;
 
 import me.xdrop.ensurej.checks.CheckString;
 
+import java.util.Set;
+
 
 public class StringHandler extends Handler<StringHandler> {
 
@@ -189,6 +191,16 @@ public class StringHandler extends Handler<StringHandler> {
      */
     public Chain<String, StringHandler> fromSet(String ... set){
         return create(CheckString.fromSet(set), s, "String in set check failed");
+    }
+
+    /**
+     * Checks whether the string is part of the set provided
+     *
+     * @param set
+     * @return
+     */
+    public Chain<String, StringHandler> fromSet(Set<String> set){
+        return create(CheckString.fromSet(set.toArray(new String[set.size()])), s, "String in set check failed");
     }
 
 }
