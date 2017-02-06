@@ -184,6 +184,15 @@ public class StringHandler extends Handler<StringHandler> {
     }
 
     /**
+     * Checks whether the string represents an integer.
+     *
+     * @return
+     */
+    public Chain<String, StringHandler> isInteger(){
+        return create(CheckString.isInteger(), s, "Integer check failed");
+    }
+
+    /**
      * Checks whether the string is part of the set provided
      *
      * @param set
