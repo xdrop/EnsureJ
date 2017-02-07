@@ -193,6 +193,15 @@ public class StringHandler extends Handler<StringHandler> {
     }
 
     /**
+     * Checks whether the string represents a decimal number.
+     *
+     * @return
+     */
+    public Chain<String, StringHandler> isDecimal(){
+        return create(CheckString.isDecimal(), s, "Decimal check failed");
+    }
+
+    /**
      * Checks whether the string is part of the set provided
      *
      * @param set
