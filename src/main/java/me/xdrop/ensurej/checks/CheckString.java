@@ -230,5 +230,21 @@ public class CheckString {
         };
     }
 
+    public static Predicate<String> containsTimes(final char character, final int times){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                int seenSoFar = times;
+                for (char c : in.toCharArray()){
+                    if (c == character) seenSoFar--;
 
+                    if (seenSoFar == 0){
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        };
+    }
 }
