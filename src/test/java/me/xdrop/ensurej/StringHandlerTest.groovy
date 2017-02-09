@@ -60,4 +60,11 @@ class StringHandlerTest extends GroovyTestCase {
         assertTrue val("aaa").allEqual().e()
         assertFalse val("aab").allEqual().e()
     }
+
+    void testIsInteger(){
+        assertTrue val("11").isInteger().e()
+        assertFalse val("11x").isInteger().e()
+        assertFalse val("1.1").isInteger().e()
+        assertTrue val("000000").isInteger().e()
+    }
 }
