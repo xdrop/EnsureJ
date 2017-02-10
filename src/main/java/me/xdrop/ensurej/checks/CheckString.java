@@ -199,7 +199,13 @@ public class CheckString {
                 try {
                     Double.parseDouble(in);
                     Float.parseFloat(in);
-                    return true;
+
+                    try {
+                        Integer.parseInt(in);
+                        return false;
+                    } catch (NumberFormatException e){
+                        return true;
+                    }
                 } catch (NumberFormatException e){
                     return false;
                 }

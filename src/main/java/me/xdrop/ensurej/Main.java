@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws ParamCheckFailedException, UnsupportedEncodingException {
-        List<Float> lst = new ArrayList<>();
+        if ("aa/../aaa.ll".matches("^[\\w\\d]+(\\.[\\w\\d]+)?$")) {
+            System.out.println("pass");
+        }
     }
 }
