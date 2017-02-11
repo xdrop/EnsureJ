@@ -75,4 +75,12 @@ class StringHandlerTest extends GroovyTestCase {
         assertFalse val("10000000.1s").isDecimal().e()
         assertFalse val("10000000").isDecimal().e()
     }
+
+    void testIsNumber(){
+        assertTrue val("111").isNumber().e();
+        assertTrue val("111.33").isNumber().e();
+        assertFalse val("111.33s").isNumber().e();
+        assertFalse val("").isNumber().e();
+
+    }
 }
