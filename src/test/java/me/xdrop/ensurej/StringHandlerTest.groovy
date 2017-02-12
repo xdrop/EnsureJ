@@ -81,6 +81,5 @@ class StringHandlerTest extends GroovyTestCase {
         assertTrue val("111.33").isNumber().e();
         assertFalse val("111.33s").isNumber().e();
         assertFalse val("").isNumber().e();
-
     }
 }

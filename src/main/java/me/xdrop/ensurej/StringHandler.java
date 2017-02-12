@@ -221,6 +221,9 @@ public class StringHandler extends Handler<StringHandler> {
         return create(CheckString.fromSet(set.toArray(new String[set.size()])), s, "String in set check failed");
     }
 
+    public Chain<String, StringHandler> containsTimes(char character, int times){
+        return create(CheckString.containsTimes(character, times), s, "String contains n characters check failed");
+    }
 
 
 }
