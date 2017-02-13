@@ -221,6 +221,13 @@ public class StringHandler extends Handler<StringHandler> {
         return create(CheckString.fromSet(set.toArray(new String[set.size()])), s, "String in set check failed");
     }
 
+    /**
+     * Checks whether the given character is contained n times within the string
+     *
+     * @param character The character to look for
+     * @param times How many occurrences to read
+     * @return
+     */
     public Chain<String, StringHandler> containsTimes(char character, int times){
         return create(CheckString.containsTimes(character, times), s, "String contains n characters check failed");
     }
