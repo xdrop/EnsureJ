@@ -82,4 +82,12 @@ class StringHandlerTest extends GroovyTestCase {
         assertFalse val("111.33s").isNumber().e();
         assertFalse val("").isNumber().e();
     }
+
+    void testFromSet(){
+        Set<String> set = new HashSet<>(["abc","edf"])
+        assertTrue val("abc").fromSet(set).e()
+        assertTrue val("edf").fromSet(set).e()
+        assertFalse val("abcd").fromSet(set).e()
+        assertFalse val("").fromSet(set).e()
+    }
 }
