@@ -253,4 +253,13 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> beginsWith(final String prefix){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                return in.startsWith(prefix);
+            }
+        };
+    }
 }
