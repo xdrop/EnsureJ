@@ -232,6 +232,16 @@ public class StringHandler extends Handler<StringHandler> {
         return create(CheckString.containsTimes(character, times), s, "String contains n characters check failed");
     }
 
+    /**
+     * Checks whether the string starts with the prefix argument
+     *
+     * @param prefix The prefix to check with
+     * @return
+     */
+    public Chain<String, StringHandler> beginsWith(String prefix){
+        return create(CheckString.beginsWith(prefix), s, "String begins with check failed");
+    }
+
 
 
 
