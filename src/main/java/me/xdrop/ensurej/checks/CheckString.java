@@ -269,6 +269,6 @@ public class CheckString {
             public boolean eval(String in) {
                 return in.endsWith(suffix);
             }
-        }
+        };
     }
 }
