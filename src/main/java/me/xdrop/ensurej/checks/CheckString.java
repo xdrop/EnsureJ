@@ -262,4 +262,13 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> endsWith(final String suffix){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                return in.endsWith(suffix);
+            }
+        }
+    }
 }
