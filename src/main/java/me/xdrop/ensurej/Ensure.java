@@ -1,6 +1,7 @@
 package me.xdrop.ensurej;
 
 import java.util.List;
+import java.util.Map;
 
 public class Ensure {
 
@@ -26,6 +27,10 @@ public class Ensure {
 
     public static StringHandler that(String a) {
         return new StringHandler(a);
+    }
+
+    public static <K,V> MapHandler<K,V> that(Map<K,V> a){
+        return new MapHandler<>(a);
     }
 
 }

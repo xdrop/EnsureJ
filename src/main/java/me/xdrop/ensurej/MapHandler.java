@@ -14,11 +14,13 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
         private List<Predicate<K>> keyPredicates;
         private Set<K> keys;
 
-        public KeyHandler(List<Predicate<K>> keyPredicates) {
+        public KeyHandler(List<Predicate<K>> keyPredicates, Set<K> keys) {
             this.keyPredicates = keyPredicates;
+            this.keys = keys;
         }
 
-        public KeyHandler(Predicate<K> keyPredicate) {
+        public KeyHandler(Predicate<K> keyPredicate, Set<K> keys) {
+            this.keys = keys;
             this.keyPredicates = new ArrayList<>();
             keyPredicates.add(keyPredicate);
         }
@@ -33,7 +35,6 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
                 @Override
                 public boolean eval(Void in) {
                     for(Predicate<K> p : keyPredicates){
-                        boolean truth = true;
                         for (K key : keys){
                             if(!p.eval(key)) {
                                 return false;
@@ -49,19 +50,17 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
             return new Chain<>(new Predicate<Void>() {
                 @Override
                 public boolean eval(Void in) {
+                    boolean truth = true;
                     for(Predicate<K> p : keyPredicates){
-                        boolean truth = true;
                         for (K key : keys){
                             if(!p.eval(key)) {
-                             truth = false;
+                                truth = false;
+                            } else {
+                                return true;
                             }
                         }
-
-                        if(truth){
-                            return true;
-                        }
                     }
-                    return true;
+                    return truth;
                 }
             }, null, MapHandler.this, "One or more key checks failed");
         }
@@ -70,14 +69,17 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
 
     class ValueHandler<T> extends Handler<KeyHandler<T>> {
         private List<Predicate<T>> valuePredicates;
+        private Collection<T> values;
 
-        public ValueHandler(List<Predicate<T>> valuePredicates) {
+        public ValueHandler(List<Predicate<T>> valuePredicates, Collection<T> values) {
             this.valuePredicates = valuePredicates;
+            this.values = values;
         }
 
-        public ValueHandler(Predicate<T> valuePredicate) {
+        public ValueHandler(Predicate<T> valuePredicate, Collection<T> values) {
             this.valuePredicates = new ArrayList<>();
             valuePredicates.add(valuePredicate);
+            this.values = values;
         }
 
         public ValueHandler<T> add(Predicate<T> valuePredicate){
@@ -89,31 +91,53 @@ public class MapHandler<K, V> extends Handler<MapHandler<K, V>> {
             return new Chain<>(new Predicate<Void>() {
                 @Override
                 public boolean eval(Void in) {
-                    return false;
+                    for(Predicate<T> p : valuePredicates){
+                        for (T val : values){
+                            if(!p.eval(val)) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
                 }
             }, null, MapHandler.this, "One or more value checks failed");
         }
 
         public Chain<Void, MapHandler<K,V>> any(){
-            return new Chain<>(null, null, MapHandler.this, "One or more key checks failed");
+            return new Chain<>(new Predicate<Void>() {
+                @Override
+                public boolean eval(Void in) {
+                    boolean truth = true;
+                    for(Predicate<T> p : valuePredicates){
+                        for (T value : values){
+                            if(!p.eval(value)) {
+                                truth = false;
+                            } else{
+                                return true;
+                            }
+                        }
+                    }
+                    return truth;
+                }
+            }, null, MapHandler.this, "One or more key checks failed");
         }
 
     }
 
     public KeyHandler<K> keys(Predicate<K> keyCheck) {
-        return new KeyHandler<K>(keyCheck);
+        return new KeyHandler<K>(keyCheck, map.keySet());
     }
 
     public KeyHandler<K> keys(Predicate<K> ... keyChecks) {
-        return new KeyHandler<>(Arrays.asList(keyChecks));
+        return new KeyHandler<>(Arrays.asList(keyChecks), map.keySet());
     }
 
     public ValueHandler<V> values(Predicate<V> valueCheck) {
-        return new ValueHandler<>(Arrays.asList(valueCheck));
+        return new ValueHandler<>(Arrays.asList(valueCheck), map.values());
     }
 
     public ValueHandler<V> values(Predicate<V> ... valueChecks) {
-        return new ValueHandler<>(Arrays.asList(valueChecks));
+        return new ValueHandler<>(Arrays.asList(valueChecks), map.values());
     }
 
 }

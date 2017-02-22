@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 
 public class CheckString {
 
+    public static Predicate<String> isAllUppercase() {
+        return isAllUppercase(true);
+    }
+
     public static Predicate<String> isAllUppercase(final boolean allowNonChar) {
         return new Predicate<String>() {
             @Override
@@ -23,6 +27,10 @@ public class CheckString {
 
             }
         };
+    }
+
+    public static Predicate<String> isAllLowercase() {
+        return isAllLowercase(true);
     }
 
     public static Predicate<String> isAllLowercase(final boolean allowNonChar){
