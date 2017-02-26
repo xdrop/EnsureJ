@@ -242,6 +242,16 @@ public class StringHandler extends Handler<StringHandler> {
         return create(CheckString.beginsWith(prefix), s, "String begins with check failed");
     }
 
+    /**
+     * Checks whether the string ends with the suffix argument
+     *
+     * @param suffix The suffix to check with
+     * @return
+     */
+    public Chain<String, StringHandler> endsWith(String suffix){
+        return create(CheckString.endsWith(suffix), s, "String ends with check failed");
+    }
+
 
 
 
