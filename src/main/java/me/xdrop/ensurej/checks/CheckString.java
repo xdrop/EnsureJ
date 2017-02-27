@@ -279,4 +279,19 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> nLetters(final int lower, final int upper){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                int count = 0;
+                for (Character c : in.toCharArray()){
+                    if (Character.isLetter(c)){
+                        count++;
+                    }
+                }
+                return CheckInt.inRange(lower, upper).eval(count);
+            }
+        };
+    }
 }
