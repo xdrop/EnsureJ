@@ -294,4 +294,19 @@ public class CheckString {
             }
         };
     }
+
+    public static Predicate<String> nNumbers(final int lower, final int upper){
+        return new Predicate<String>() {
+            @Override
+            public boolean eval(String in) {
+                int count = 0;
+                for (Character c : in.toCharArray()){
+                    if (c.toString().matches("\\d+")){
+                        count++;
+                    }
+                }
+                return CheckInt.inRange(lower, upper).eval(count);
+            }
+        };
+    }
 }
